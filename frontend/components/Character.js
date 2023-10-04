@@ -1,42 +1,26 @@
 import React, {useState} from 'react'
 
-function Character(props) { 
+function Character({people, homeworld}) {
   // ❗ Add the props
   // ❗ Create a state to hold whether the homeworld is rendering or not
   // ❗ Create a "toggle" click handler to show or remove the homeworld
 
   const[render, setRender] = useState(false);
-
-  function togglePlanet(homeworld) {
-    return props.planets.map((planet) =>  {
-      if (planet.id === homeworld) {
-        return planet.name;
-      }
-    })
-  }
-
-  const toggle = () => {
-    setRender(!render);
-  };
+  const togglePlanet = () => setRender(!render);
 
   return (
-    <div className="character-card">
+    <div className="character-card" onClick={togglePlanet}>
       {/* Use the same markup with the same attributes as in the mock */}
-      <h3 onClick={() => toggle()} className="character-name">
-        {props.people.name}
+      <h3 className="character-name">
+        {people.name}
       </h3>
-      {render ? (
+      {render && (
         <p>
-          Planet: {" "}
-          {
-            <span className="character-planet">
-              {" "}
-              {togglePlanet(props.people.homeworld)}
-            </span>
-          }
+          Planet:
+          <span className="character-planet">
+            {homeworld}
+          </span>
         </p>
-      ) : (
-        ""
       )}
     </div>
   );

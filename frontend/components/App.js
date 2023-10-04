@@ -13,16 +13,17 @@ function App() {
   const [planets, setPlanets] = useState ([])
 
   useEffect(() => {
-    axios
-    .get(urlPeople)
+    axios.get(urlPeople)
     .then(res => {
       setPeople(res.data)
     })
-    .catch()
+    .catch(err => {console.err(err)})
+  
     axios.get(urlPlanets)
     .then(res => {
       setPlanets(res.data)
     })
+    .catch(err => {console.err(err)})
   }, [])
 
   return (
@@ -32,8 +33,9 @@ function App() {
       {/* ❗ Map over the data in state, rendering a Character at each iteration */}
 
     {people.map((people) => {
+      const homeworld = planets.find(planet => planet.id === people.homeworld)?.name || 'Error finding planet';
       return (
-        <Character planets={planets} key={people.id} people={people}/>
+        <Character homeworld={homeworld} key={people.id} people={people}/>
       )
     })}
     </div>
